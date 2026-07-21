@@ -589,12 +589,12 @@ svg{
     transform: translateY(-2px);
 }
 
-.feedback-section {
+.newsletter-section {
     padding: 96px 150px;
     background-color: #f8f9ff;
 }
 
-.feedback-container {
+.newsletter-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -608,31 +608,31 @@ svg{
     box-shadow: 0 16px 36px rgba(17, 24, 39, 0.16);
 }
 
-.feedback-content-wrap {
+.newsletter-content-wrap {
     max-width: 720px;
 }
 
-.feedback-heading {
+.newsletter-heading {
     margin: 0 0 12px;
     font-size: 36px;
     color: #fff;
 }
 
-.feedback-content {
+.newsletter-content {
     margin: 0 0 24px;
     font-size: 16px;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.9);
 }
 
-.feedback-form {
+.newsletter-form {
     display: flex;
     gap: 12px;
     width: min(100%, 520px);
     margin-bottom: 16px;
 }
 
-.feedback-form input {
+.newsletter-form input {
     flex: 1;
     padding: 14px 16px;
     border: 0;
@@ -659,7 +659,7 @@ svg{
     box-shadow: 0 8px 20px rgba(17, 24, 39, 0.18);
 }
 
-.feedback-disclaimer {
+.newsletter-disclaimer {
     margin: 0;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.8);
