@@ -17,7 +17,7 @@ GameVerse features a clean, immersive UI inspired by modern gaming platforms, wi
 
 ## 🚀 Live Demo
 
-🔗 **Website:** https://your-live-demo-link.com
+🔗 **Website:** https://gameverse-store.vercel.app/
 
 ---
 
@@ -154,7 +154,7 @@ GitHub:
 https://github.com/Arhamali06
 
 LinkedIn:
-(Add your LinkedIn URL)
+https://www.linkedin.com/in/arhamali06/
 
 ---
 
