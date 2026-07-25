@@ -20,13 +20,22 @@ header{
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items:center;
-    width:100%;
-    min-height: 100px;
-    padding: 0 48px;
-    background-color: rgb(255, 255, 255);
+    width: calc(100% - 64px);
+    max-width: 1400px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    min-height: 80px;
+    padding: 0 32px;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 999px;
     position:fixed;
-    top:0;
+    top: 24px;
     z-index:100;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     animation: nav-enter 0.55s ease-out both;
 }
 .logo{
@@ -35,7 +44,7 @@ header{
     font-size: 32px;
     font-weight: 600;
     color: black;
-    padding-left:100px;
+    padding-left: 0;
 }
 .navbar {
     justify-self: center;
@@ -95,7 +104,7 @@ svg{
     align-items:center;
     justify-self: end;
     gap:16px;
-    padding-right:100px;
+    padding-right:0;
 }
 .search {
     display: flex;
@@ -138,6 +147,10 @@ svg{
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.hamburger-menu {
+    display: none;
 }
 
 .hero{
@@ -696,6 +709,17 @@ svg{
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .site-footer {
     background: #eff4ff;
     color:#0b1c30;
@@ -838,14 +862,93 @@ svg{
     }
 }
 
+@media (max-width: 1200px) {
+    .menu {
+        gap: 20px;
+    }
+    .profile-info {
+        gap: 12px;
+    }
+    .search input {
+        width: 100px;
+    }
+}
 
-
-@media (max-width: 850px) {
+@media (max-width: 1024px) {
     header {
         grid-template-columns: auto 1fr auto;
-        padding: 0 24px;
+        padding: 12px 24px;
+        top: 16px;
+        width: calc(100% - 32px);
+        min-height: auto;
     }
-    .menu { gap: 18px; }
+    .hamburger-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 6px;
+        color: #111827;
+        transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .hamburger-menu:hover,
+    .hamburger-menu:focus-visible {
+        color: #6b46ff;
+    }
+    .hamburger-menu svg {
+        width: 24px;
+        height: 24px;
+    }
+    .hamburger-menu .close-icon {
+        display: none;
+    }
+    header.menu-open .hamburger-menu .hamburger-icon {
+        display: none;
+    }
+    header.menu-open .hamburger-menu .close-icon {
+        display: block;
+    }
+
+    .navbar {
+        display: none;
+        grid-row: 2;
+        grid-column: 1 / -1;
+        width: 100%;
+        border-top: 1px solid rgba(226, 232, 240, 0.8);
+        padding-top: 16px;
+        margin-top: 16px;
+    }
+    header.menu-open .navbar {
+        display: block;
+        animation: slide-down 0.25s ease-out forwards;
+    }
+    header.menu-open {
+        border-radius: 24px !important;
+        padding-bottom: 20px;
+    }
+    .menu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        width: 100%;
+    }
+    .menu li {
+        width: 100%;
+    }
+    .menu a {
+        padding: 10px 16px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .menu a:hover,
+    .menu a.active {
+        background-color: rgba(107, 70, 255, 0.08);
+    }
+    .menu a::after {
+        display: none;
+    }
     .search input { width: 100px; }
     .logo { padding-left: 0; }
     .profile-info { padding-right: 0; }
@@ -865,16 +968,9 @@ svg{
         grid-template-columns: auto 1fr;
         gap: 12px;
         padding: 16px 24px;
-    }
-    .navbar {
-        grid-row: 2;
-        grid-column: 1 / -1;
-        width: 100%;
-    }
-    .menu {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: 10px 16px;
+        top: 12px;
+        width: calc(100% - 24px);
+        border-radius: 24px;
     }
     .hero {
         min-height: 100svh;

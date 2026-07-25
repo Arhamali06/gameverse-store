@@ -65,6 +65,39 @@
           />
           <span>Arham</span>
         </div>
+
+        <button class="hamburger-menu" type="button" aria-label="Toggle navigation menu" id="hamburger-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="hamburger-icon"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="close-icon"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -352,5 +385,30 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const header = document.querySelector('header');
+      const navLinks = document.querySelectorAll('.menu a');
+
+      // Toggle menu open/close
+      hamburgerBtn.addEventListener('click', () => {
+        header.classList.toggle('menu-open');
+      });
+
+      // Close menu when a link is clicked
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          header.classList.remove('menu-open');
+        });
+      });
+
+      // Close menu on resize if viewport becomes desktop width
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024) {
+          header.classList.remove('menu-open');
+        }
+      });
+    </script>
   </body>
 </html>
