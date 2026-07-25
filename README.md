@@ -40,6 +40,7 @@ GameVerse features a clean, immersive UI inspired by modern gaming platforms, wi
 
 - HTML5
 - CSS3
+- JavaScript
 - Flexbox
 - CSS Grid
 - Google Fonts
