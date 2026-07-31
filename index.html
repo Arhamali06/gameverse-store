@@ -27,23 +27,27 @@
 
       <!-- profile info section -->
       <div class="profile-info">
-        <label class="search" aria-label="Search games">
-          <input type="search" placeholder="Search games" />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
-            />
-          </svg>
-        </label>
+        <div class="search-wrapper">
+          <button class="search-toggle" type="button" aria-label="Open search" aria-expanded="false">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
+              />
+            </svg>
+          </button>
+          <label class="search" aria-label="Search games">
+            <input type="search" placeholder="Search games" />
+          </label>
+        </div>
         <button class="icon-button" type="button" aria-label="Shopping cart">
           <svg
             xmlns="http://www.w3.org/2000/svg"

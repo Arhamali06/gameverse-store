@@ -1,6 +1,9 @@
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const header = document.querySelector('header');
     const navLinks = document.querySelectorAll('.menu a');
+    const searchToggle = document.querySelector('.search-toggle');
+    const searchField = document.querySelector('.search');
+    const searchInput = document.querySelector('.search input');
     const revealTargets = document.querySelectorAll(
         '.category-header, .category-cards .card, .feature-head, .feature-cards-container .feature-card, .offer-head, .special-offers-container .special-offer-card, .newsletter-container, .footer-container, .footer-bottom'
     );
@@ -93,6 +96,43 @@
         }
     });
     };
+
+    const closeSearch = () => {
+        if (searchField) {
+            searchField.classList.remove('is-open');
+        }
+
+        if (searchToggle) {
+    
+            searchToggle.setAttribute('aria-expanded', 'false');
+        }
+    };
+
+    if (searchToggle && searchField && searchInput) {
+        searchToggle.addEventListener('click', () => {
+            const isOpen = searchField.classList.toggle('is-open');
+            searchToggle.classList.toggle('is-open', isOpen);
+            searchToggle.setAttribute('aria-expanded', String(isOpen));
+
+            if (isOpen) {
+                searchInput.focus();
+            } else {
+                searchInput.blur();
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!searchField.contains(event.target) && !searchToggle.contains(event.target)) {
+                closeSearch();
+            }
+        });
+
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeSearch();
+            }
+        });
+    }
 
       // Toggle menu open/close
     hamburgerBtn.addEventListener('click', () => {
