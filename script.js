@@ -6,6 +6,78 @@
     );
     const scrollSections = document.querySelectorAll('main section[id], footer[id]');
 
+    const featuredGames = [
+        {
+            name: 'GTA V',
+            price: '$69.99',
+            category: 'Action &bull; Adventure',
+            image: 'assets/images/games/gtav.jpg',
+            topRated: true
+        },
+        {
+            name: 'Tekken 8',
+            price: '$59.99',
+            category: 'Action &bull; Multiplayer',
+            image: 'assets/images/games/tekken%208.jpg'
+        },
+        {
+            name: 'Black Myth Wukong',
+            price: '$89.99',
+            category: 'RPG &bull; Adventure',
+            image: 'assets/images/games/black%20myth.jpg'
+        },
+        {
+            name: "Assassin's Creed",
+            price: '$29.99',
+            category: 'OpenWorld &bull; Adventure',
+            image: 'assets/images/games/assasians%20creed.jpg'
+        },
+        {
+            name: "Forza Horizon 5",
+            price: '$59.99',
+            category: 'Racing &bull; Adventure',
+            image: 'assets/images/games/forza-horizon.jpg'
+        },
+        {
+            name: "Mortal Kombat 11",
+            price: '$99.99',
+            category: 'Fighting &bull; Multiplayer',
+            image: 'assets/images/games/mortal-combat11.jpg'
+        },
+        {
+            name: "FIFA 26",
+            price: '$49.99',
+            category: 'Football &bull; Multiplayer',
+            image: 'assets/images/games/fifa-26.jpg'
+        },
+        {
+            name: "God of War Ragnarok",
+            price: '$89.99',
+            category: 'Fighting &bull; Action',
+            image: 'assets/images/games/god-of-war.jpg'
+        }
+    ];
+
+    const gamesContainer = document.querySelector('.feature-cards-container');
+    featuredGames.forEach((game) => {
+        const gameCard = document.createElement('article');
+        gameCard.classList.add('feature-card');
+        gameCard.innerHTML = `
+            <img class="feature-card-image" src="${game.image}" alt="${game.name}">
+            ${game.topRated ? '<span class="top-rated">Top Rated</span>' : ''}
+            <div class="feature-card-details">
+                <div class="feature-card-title-row">
+                    <h3>${game.name}</h3>
+                    <span class="game-price">${game.price}</span>
+                </div>
+                <p class="game-category">${game.category}</p>
+                <button class="add-to-cart" type="button">Add to Cart</button>
+            </div>
+        `;
+        gamesContainer.appendChild(gameCard);
+    });
+
+
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }

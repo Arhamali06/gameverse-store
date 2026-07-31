@@ -8,8 +8,13 @@
   </head>
   <body>
     <header>
+
+
+      <!-- logo -->
       <a class="logo" href="#" aria-label="GameVerse home">GameVerse</a>
 
+
+      <!-- navigation list-->
       <nav class="navbar" aria-label="Primary navigation">
         <ul class="menu">
           <li><a class="active" href="#hero" aria-current="page">Home</a></li>
@@ -17,10 +22,10 @@
           <li><a href="#games">Games</a></li>
           <li><a href="#offers">Offers</a></li>
           <li><a href="#newsletter">Newsletter</a></li>
-          <li><a href="#footer">Support</a></li>
         </ul>
       </nav>
 
+      <!-- profile info section -->
       <div class="profile-info">
         <label class="search" aria-label="Search games">
           <input type="search" placeholder="Search games" />
@@ -102,6 +107,8 @@
     </header>
 
     <main>
+
+      <!-- hero section -->
       <section class="hero" id="hero">
         <div class="latest-release">
           <svg
@@ -135,6 +142,8 @@
         </div>
       </section>
 
+
+      <!-- category section -->
       <section class="category-container" id="category">
         <div class="category-header">
           <div>
@@ -185,83 +194,43 @@
         </div>
       </section>
 
+      
+      <!-- featured games section -->
       <section class="festured-games" id="games">
         <div class="feature-container">
           <div class="feature-head">
-            <h2 class="festured-games-heading">Featured Games</h2>
-            <p class="featured-games-content">
-              Hand-picked excellence for your library.
-            </p>
+            <div>
+              <h2 class="festured-games-heading">Featured Games</h2>
+              <p class="featured-games-content">
+                Hand-picked excellence for your library.
+              </p>
+            </div>
+            <a class="view-all" href="#">
+              View all
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+            </a>
           </div>
-          <div class="feature-cards-container">
-            <article class="feature-card">
-              <img
-                class="feature-card-image"
-                src="assets/images/games/gtav.jpg"
-                alt="gta v"
-              />
-              <span class="top-rated">Top Rated</span>
-              <div class="feature-card-details">
-                <div class="feature-card-title-row">
-                  <h3>GTA V</h3>
-                  <span class="game-price">$69.99</span>
-                </div>
-                <p class="game-category">Action &bull; Adventure</p>
-                <button class="add-to-cart" type="button">Add to Cart</button>
-              </div>
-            </article>
 
-            <article class="feature-card">
-              <img
-                class="feature-card-image"
-                src="assets/images/games/tekken%208.jpg"
-                alt="Tekken 8"
-              />
-              <div class="feature-card-details">
-                <div class="feature-card-title-row">
-                  <h3>Tekken 8</h3>
-                  <span class="game-price">$59.99</span>
-                </div>
-                <p class="game-category">Action &bull; Multiplayer</p>
-                <button class="add-to-cart" type="button">Add to Cart</button>
-              </div>
-            </article>
-
-            <article class="feature-card">
-              <img
-                class="feature-card-image"
-                src="assets/images/games/black%20myth.jpg"
-                alt="black myth"
-              />
-              <div class="feature-card-details">
-                <div class="feature-card-title-row">
-                  <h3>Black Myth Wukong</h3>
-                  <span class="game-price">$89.99</span>
-                </div>
-                <p class="game-category">RPG &bull; Adventure</p>
-                <button class="add-to-cart" type="button">Add to Cart</button>
-              </div>
-            </article>
-
-            <article class="feature-card">
-              <img
-                class="feature-card-image"
-                src="assets/images/games/assasians%20creed.jpg"
-                alt="assasians creed"
-              />
-              <div class="feature-card-details">
-                <div class="feature-card-title-row">
-                  <h3>assassin's creed</h3>
-                  <span class="game-price">$39.99</span>
-                </div>
-                <p class="game-category">OpenWorld &bull; Adventure</p>
-                <button class="add-to-cart" type="button">Add to Cart</button>
-              </div>
-            </article>
-          </div>
+          <div class="feature-cards-container"></div>
         </div>
       </section>
 
+
+
+      <!-- special offers section -->
       <section class="special-offers" id="offers">
         <div class="offer-head">
           <h2 class="special-offers-heading">Special Offers</h2>
@@ -311,6 +280,9 @@
         </div>
       </section>
 
+
+
+      <!-- newsletter section -->
       <section class="newsletter-section" id="newsletter">
         <div class="newsletter-container">
           <h2 class="newsletter-heading">Stay in the Game</h2>
@@ -329,6 +301,8 @@
       </section>
     </main>
 
+
+    <!-- footer section -->
     <footer class="site-footer" id="footer">
       <div class="footer-container">
         <div class="footer-brand">
