@@ -9,6 +9,30 @@
     );
     const scrollSections = document.querySelectorAll('main section[id], footer[id]');
 
+    const themeToggle = document.getElementById('theme-toggle');
+const htmlEl = document.documentElement;
+
+const applyTheme = (isDark) => {
+    htmlEl.classList.toggle('dark-mode', isDark);
+    themeToggle.setAttribute(
+        'aria-label',
+        isDark ? 'Switch to light mode' : 'Switch to dark mode'
+    );
+};
+
+// default stays as-is (light) unless the user already chose dark before
+const savedTheme = localStorage.getItem('gameverse-theme');
+applyTheme(savedTheme === 'dark');
+
+themeToggle.addEventListener('click', () => {
+    const isDark = htmlEl.classList.toggle('dark-mode');
+    themeToggle.setAttribute(
+        'aria-label',
+        isDark ? 'Switch to light mode' : 'Switch to dark mode'
+    );
+    localStorage.setItem('gameverse-theme', isDark ? 'dark' : 'light');
+});
+
     const featuredGames = [
         {
             name: 'GTA V',
@@ -79,7 +103,6 @@
         `;
         gamesContainer.appendChild(gameCard);
     });
-
 
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
