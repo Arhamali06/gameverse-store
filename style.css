@@ -10,6 +10,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 section[id] {
@@ -138,6 +139,7 @@ svg{
     transform: translateY(-1px);
 }
 .search {
+    position: relative;
     display: flex;
     align-items: center;
     width: 0;
@@ -153,12 +155,13 @@ svg{
 }
 .search.is-open {
     width: 220px;
-    padding: 10px 14px;
+    padding: 10px 34px 10px 14px;
     border: 1px solid #e2e8f0;
     background: white;
     opacity: 1;
     pointer-events: auto;
     box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+    overflow: visible;
 }
 .search input {
     width: 100%;
@@ -166,7 +169,31 @@ svg{
     outline: 0;
     font: inherit;
     background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
 }
+.search input::-webkit-search-cancel-button,
+.search input::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+}
+.search-clear {
+    display: none;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: #6b7280;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+}
+.search-clear.is-visible { display: block; }
+.search-clear:hover { color: #6b46ff; }
+
 .icon-button {
     display: grid;
     place-items: center;
@@ -185,6 +212,13 @@ svg{
     color: #fff;
     transform: translateY(-1px);
 }
+
+/* theme toggle icon swap */
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+html.dark-mode .theme-toggle .icon-sun { display: block; }
+html.dark-mode .theme-toggle .icon-moon { display: none; }
+
 .profile-info1{
     display:flex;
     flex-direction:row;
@@ -948,6 +982,7 @@ svg{
     }
 }
 
+/* ============== RESPONSIVE (NAVBAR) ============== */
 @media (max-width: 1200px) {
     .menu {
         gap: 20px;
@@ -977,13 +1012,9 @@ svg{
         order: 1;
         padding-left: 0;
     }
-    .profile-info {
-        order: 2;
-        margin-left: auto;
-        padding: 4px 6px;
-    }
+
     .hamburger-menu {
-        order: 3;
+        order: 2;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1012,23 +1043,32 @@ svg{
         display: block;
     }
 
-    .navbar {
+    /* both nav links and the icon row live in the same dropdown */
+    .navbar,
+    .profile-info {
         display: none;
-        order: 4;
+        order: 3;
         flex-basis: 100%;
         width: 100%;
+    }
+    .navbar {
         border-top: 1px solid rgba(226, 232, 240, 0.8);
         padding-top: 16px;
         margin-top: 4px;
     }
+    header.menu-open .navbar,
+    header.menu-open .profile-info {
+        display: flex;
+        animation: slide-down 0.25s ease-out forwards;
+    }
     header.menu-open .navbar {
         display: block;
-        animation: slide-down 0.25s ease-out forwards;
     }
     header.menu-open {
         border-radius: 24px !important;
         padding-bottom: 20px;
     }
+
     .menu {
         flex-direction: column;
         align-items: stretch;
@@ -1050,9 +1090,27 @@ svg{
     .menu a::after {
         display: none;
     }
-    .search-toggle.is-open {
-        width: 220px;
+
+    /* profile-info reflows as a centered icon row inside the dropdown */
+    .profile-info {
+        order: 4;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+        padding: 16px 0 0;
+        margin: 0;
+        border: 0;
+        border-top: 1px solid rgba(226, 232, 240, 0.8);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
     }
+
+    .search-toggle.is-open {
+        background: #6b46ff;
+        color: #fff;
+    }
+
     .category-container { padding: 72px 24px; }
     .festured-games { padding: 72px 24px; }
     .special-offers { padding: 72px 24px; }
@@ -1085,22 +1143,19 @@ svg{
         width: 100%;
     }
     .adventure-heading { font-size: 40px; }
-    .profile-info {
-        gap: 8px;
-        padding: 4px;
-        flex-wrap: nowrap;
-        justify-content: flex-end;
-    }
-    .profile-info1 {
-        display: none;
-    }
+
     .search-toggle {
         width: 40px;
         height: 40px;
     }
-    .search-toggle.is-open {
-        width: 180px;
+    .profile-info1 img {
+        width: 30px;
+        height: 30px;
     }
+    .profile-info1 span {
+        font-size: 14px;
+    }
+
     .category-header { align-items: flex-start; }
     .category-header h2 { font-size: 28px; }
     .festured-games-heading { font-size: 28px; }
@@ -1130,42 +1185,31 @@ svg{
         font-size: 24px;
     }
 
-    .navbar {
-        display: none;
-        width: 100%;
-    }
-
-    .profile-info {
-        gap: 6px;
-        align-items: center;
-        flex-wrap: nowrap;
-    }
-
-    .profile-info1 {
-        display: none;
-    }
-
-    .hamburger-menu {
-        display: flex;
-    }
-
     .search-toggle {
         width: 38px;
         height: 38px;
     }
-
-    .search-toggle.is-open {
-        width: 155px;
+    .profile-info1 img {
+        width: 26px;
+        height: 26px;
+    }
+    .profile-info1 span {
+        font-size: 13px;
     }
 
-    header.menu-open .navbar {
-        display: block;
-        animation: slide-down 0.22s ease-out forwards;
+    header.menu-open .navbar,
+    header.menu-open .profile-info {
         background: white;
         margin-top: 12px;
         border-radius: 12px;
         padding: 12px 12px 16px;
         box-shadow: 0 10px 30px rgba(2,6,23,0.08);
+        border-top: 0;
+    }
+    header.menu-open .profile-info {
+        margin-top: 0;
+        border-radius: 0 0 12px 12px;
+        box-shadow: none;
     }
 
     .menu {
@@ -1178,15 +1222,7 @@ svg{
     .menu a { padding: 10px 12px; }
 }
 
-/* --- theme toggle icon swap --- */
-.theme-toggle .icon-sun { display: none; }
-.theme-toggle .icon-moon { display: block; }
-html.dark-mode .theme-toggle .icon-sun { display: block; }
-html.dark-mode .theme-toggle .icon-moon { display: none; }
-
-body { transition: background-color 0.3s ease, color 0.3s ease; }
-
-/* --- dark theme --- */
+/* ============== DARK THEME ============== */
 html.dark-mode body { background-color: #0f1117; color: #e5e7eb; }
 
 html.dark-mode header {
@@ -1205,6 +1241,10 @@ html.dark-mode .icon-button,
 html.dark-mode .profile-info1 { background: #1a1d27; border-color: rgba(255,255,255,0.08); color: #f1f5f9; }
 html.dark-mode .search.is-open { background: #1a1d27; border-color: rgba(255,255,255,0.08); }
 html.dark-mode .search input { color: #f1f5f9; }
+html.dark-mode .hamburger-menu { color: #f1f5f9; }
+html.dark-mode .search-clear { color: #9ca3af; }
+html.dark-mode .search-clear:hover { color: #9f7aea; }
+html.dark-mode .profile-info { border-top-color: rgba(255,255,255,0.08); }
 
 html.dark-mode .hero::before {
     background-image:
