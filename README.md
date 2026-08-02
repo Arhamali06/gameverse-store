@@ -1,18 +1,15 @@
 # 🎮 GameVerse
 
-A modern and responsive gaming store landing page built with **HTML5** and **CSS3**.  
-GameVerse features a clean, immersive UI inspired by modern gaming platforms, with sections for featured games, categories, special offers, and more.
+GameVerse is a responsive gaming store landing page built with **HTML5**, **CSS3**, and **JavaScript**. It now goes beyond a simple static layout and includes an interactive header, dark theme support, scroll-based UI effects, and JavaScript-generated game cards.
 
 ---
 
 ## 📸 Preview
 
-> Add screenshots here after uploading them.
-
 ### Home Page
 
-![Home Page- light theme](ScreenShots/gameverse-light.png)
-![Home Page- dark theme](ScreenShots/gameverse-dark.png)
+![Home Page - light theme](ScreenShots/gameverse-light.png)
+![Home Page - dark theme](ScreenShots/gameverse-dark.png)
 
 ---
 
@@ -24,16 +21,22 @@ GameVerse features a clean, immersive UI inspired by modern gaming platforms, wi
 
 ## ✨ Features
 
-- 🎨 Modern gaming-inspired interface
-- 📱 Responsive layout for different screen sizes
-- 🧭 Fixed navigation bar
-- 🎮 Hero section with call-to-action
-- 🗂️ Game categories
-- 🔥 Featured games section
-- 💸 Special offers section
-- ⭐ Clean card-based design
-- 🎯 Smooth hover effects and transitions
-- 📦 Organized project structure
+- Responsive layout for desktop, tablet, and mobile screens
+- Sticky glass-style navigation bar
+- Mobile hamburger menu with open and close states
+- Search control with expandable input and clear button
+- Theme toggle with dark mode and light mode support
+- Dark theme preference saved in `localStorage`
+- Hero section with strong call-to-action buttons
+- 5 game category cards
+- 8 featured games rendered dynamically from JavaScript
+- Top Rated badge on the highlighted featured game
+- 2 special offer cards with pricing and discounts
+- Scroll reveal animations for sections and cards
+- Active navigation state that updates on click and scroll
+- Newsletter subscription call-to-action
+- Responsive footer with grouped links and social buttons
+- Smooth hover effects, transitions, and clean card styling
 
 ---
 
@@ -42,41 +45,11 @@ GameVerse features a clean, immersive UI inspired by modern gaming platforms, wi
 - HTML5
 - CSS3
 - JavaScript
-- Flexbox
 - CSS Grid
-- Google Fonts
-- SVG Icons
-
----
-
-## 📂 Project Structure
-
-```
-GameVerse/
-│
-├── assets/
-│   ├__ images/
-│
-├── screenshots/
-│
-├── index.html
-├── style.css
-└── README.md
-```
-
----
-
-## 🎨 Design Highlights
-
-The UI focuses on creating a modern gaming experience using:
-
-- gaming-inspired color palette
-- Rounded cards
-- Soft shadows
-- Hover animations
-- Clean typography
-- Spacious layouts
-- Modern CTA buttons
+- Flexbox
+- `IntersectionObserver`
+- `localStorage`
+- SVG icons
 
 ---
 
@@ -87,64 +60,75 @@ The UI focuses on creating a modern gaming experience using:
 - Categories
 - Featured Games
 - Special Offers
-- Newsletter Subscription
+- Newsletter
 - Footer
 
 ---
 
-## 💡 What I Learned
+## 📂 Project Structure
 
-While building this project, I practiced and improved my understanding of:
-
-- Semantic HTML
-- CSS Flexbox
-- CSS Grid
-- Positioning
-- Responsive layouts
-- Background images
-- Cards and UI components
-- Hover effects
-- Clean folder structure
-- Modern web design principles
-
----
-
-## 🎯 Future Improvements
-
-Some features I plan to add in future versions:
-
-- JavaScript interactivity
-- Search functionality
-- Shopping cart
-- Dark / Light mode
-- Game details page
-- Product filtering
-- Login & Signup pages
-- Backend integration
-- Payment system
+```
+GameVerse/
+├── assets/
+│   └── images/
+│       ├── category/
+│       ├── games/
+│       ├── header/
+│       └── hero/
+├── ScreenShots/
+├── .vscode/
+│   └── settings.json
+├── index.html
+├── script.js
+├── style.css
+└── README.md
+```
 
 ---
 
-## 📱 Responsive Design
+## 🎨 Design Highlights
 
-The website is designed with responsiveness in mind to provide a better user experience across different devices.
+The UI is built around a modern gaming storefront look with:
+
+- layered hero imagery
+- bold accent colors
+- rounded cards and pills
+- soft shadows and glass effects
+- smooth micro-interactions
+- clear visual hierarchy
+- light and dark theme styling
+
+---
+
+## 💡 What I Practiced
+
+This project helped me strengthen my understanding of:
+
+- Semantic HTML structure
+- Responsive layout techniques
+- DOM manipulation in JavaScript
+- Theme switching and persistence
+- Navigation state tracking
+- Scroll reveal animations
+- Card-based UI composition
+- CSS Grid and Flexbox
+- Accessible interactive controls
+
+---
+
+## 🎯 Notes
+
+- The search, cart, browse, trailer, buy now, and subscribe controls are currently UI-focused.
+- The page is designed as a portfolio-style storefront landing page.
 
 ---
 
 ## ⚡ Performance
 
-- Lightweight project
-- Optimized assets
-- Simple and maintainable code
-- Fast loading layout
-
----
-
-## 🤝 Contributing
-
-Suggestions and improvements are always welcome.
-
-If you have ideas to improve the project, feel free to fork the repository and create a pull request.
+- Lightweight single-page build
+- Optimized image-based content
+- No framework overhead
+- Smooth, browser-native interactions
 
 ---
 
@@ -152,21 +136,12 @@ If you have ideas to improve the project, feel free to fork the repository and c
 
 **Muhammad Arham Ali**
 
-GitHub:
-https://github.com/Arhamali06
+GitHub: https://github.com/Arhamali06
 
-LinkedIn:
-https://www.linkedin.com/in/arhamali06/
-
----
-
-## ⭐ Support
-
-If you like this project, consider giving it a ⭐ on GitHub.
-It really helps and motivates me to build more projects.
+LinkedIn: https://www.linkedin.com/in/arhamali06/
 
 ---
 
 ## 📄 License
 
-This project is created for educational and portfolio purposes.
+This project is for educational and portfolio purposes.
