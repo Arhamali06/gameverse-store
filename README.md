@@ -11,7 +11,8 @@ GameVerse features a clean, immersive UI inspired by modern gaming platforms, wi
 
 ### Home Page
 
-![Home Page](ScreenShots/gameverse-hero1.png)
+![Home Page- light theme](ScreenShots/gameverse-light.png)
+![Home Page- dark theme](ScreenShots/gameverse-dark.png)
 
 ---
 
