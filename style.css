@@ -28,7 +28,7 @@ header{
     right: 0;
     min-height: 80px;
     padding: 10px 24px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.72) 0%, rgba(248, 249, 255, 0.58) 100%);
+    background: linear-gradient(90deg, #ffffff 0%, #f8f9ff 100%);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(226, 232, 240, 0.8);
@@ -1111,6 +1111,11 @@ html.dark-mode .theme-toggle .icon-moon { display: none; }
         color: #fff;
     }
 
+    html.dark-mode .profile-info {
+        background: transparent;
+        border-top-color: rgba(255,255,255,0.08);
+    }
+
     .category-container { padding: 72px 24px; }
     .festured-games { padding: 72px 24px; }
     .special-offers { padding: 72px 24px; }
@@ -1212,6 +1217,12 @@ html.dark-mode .theme-toggle .icon-moon { display: none; }
         box-shadow: none;
     }
 
+    html.dark-mode header.menu-open .navbar,
+    html.dark-mode header.menu-open .profile-info {
+        background: #1a1d27;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
     .menu {
         display: flex;
         flex-direction: column;
@@ -1226,7 +1237,7 @@ html.dark-mode .theme-toggle .icon-moon { display: none; }
 html.dark-mode body { background-color: #0f1117; color: #e5e7eb; }
 
 html.dark-mode header {
-    background: linear-gradient(90deg, rgba(21, 23, 31, 0.78) 0%, rgba(26, 29, 39, 0.68) 100%);
+    background: linear-gradient(90deg, #15171f 0%, #1a1d27 100%);
     border-color: rgba(255,255,255,0.08);
     box-shadow: 0 12px 35px rgba(0,0,0,0.4);
 }
@@ -1235,7 +1246,9 @@ html.dark-mode .menu a { color: #f1f5f9; }
 html.dark-mode .menu a:hover,
 html.dark-mode .menu a.active { color: #6b46ff; }
 
-html.dark-mode .profile-info { background: rgba(26,29,39,0.95); border-color: rgba(255,255,255,0.08); }
+@media (min-width: 1025px) {
+    html.dark-mode .profile-info { background: rgba(26,29,39,0.95); border-color: rgba(255,255,255,0.08); }
+}
 html.dark-mode .search-toggle,
 html.dark-mode .icon-button,
 html.dark-mode .profile-info1 { background: #1a1d27; border-color: rgba(255,255,255,0.08); color: #f1f5f9; }
@@ -1244,7 +1257,6 @@ html.dark-mode .search input { color: #f1f5f9; }
 html.dark-mode .hamburger-menu { color: #f1f5f9; }
 html.dark-mode .search-clear { color: #9ca3af; }
 html.dark-mode .search-clear:hover { color: #9f7aea; }
-html.dark-mode .profile-info { border-top-color: rgba(255,255,255,0.08); }
 
 html.dark-mode .hero::before {
     background-image:

@@ -1,9 +1,10 @@
-    const hamburgerBtn = document.getElementById('hamburger-btn');
+const hamburgerBtn = document.getElementById('hamburger-btn');
     const header = document.querySelector('header');
     const navLinks = document.querySelectorAll('.menu a');
     const searchToggle = document.querySelector('.search-toggle');
     const searchField = document.querySelector('.search');
     const searchInput = document.querySelector('.search input');
+    const searchClear = document.querySelector('.search-clear');
     const revealTargets = document.querySelectorAll(
         '.category-header, .category-cards .card, .feature-head, .feature-cards-container .feature-card, .offer-head, .special-offers-container .special-offer-card, .newsletter-container, .footer-container, .footer-bottom'
     );
@@ -126,7 +127,7 @@ themeToggle.addEventListener('click', () => {
         }
 
         if (searchToggle) {
-    
+            searchToggle.classList.remove('is-open');
             searchToggle.setAttribute('aria-expanded', 'false');
         }
     };
@@ -154,6 +155,18 @@ themeToggle.addEventListener('click', () => {
             if (event.key === 'Escape') {
                 closeSearch();
             }
+        });
+    }
+
+    if (searchInput && searchClear) {
+        searchInput.addEventListener('input', () => {
+            searchClear.classList.toggle('is-visible', searchInput.value.length > 0);
+        });
+
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClear.classList.remove('is-visible');
+            searchInput.focus();
         });
     }
 
