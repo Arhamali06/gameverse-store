@@ -87,9 +87,17 @@ themeToggle.addEventListener('click', () => {
     ];
 
     const gamesContainer = document.querySelector('.feature-cards-container');
-    featuredGames.forEach((game) => {
+    const gamesViewAllButton = document.getElementById('games-view-all');
+    const gamesViewAllLabel = document.getElementById('games-view-all-label');
+
+    featuredGames.forEach((game, index) => {
         const gameCard = document.createElement('article');
         gameCard.classList.add('feature-card');
+
+        if (index >= 4) {
+            gameCard.classList.add('is-hidden');
+        }
+
         gameCard.innerHTML = `
             <img class="feature-card-image" src="${game.image}" alt="${game.name}">
             ${game.topRated ? '<span class="top-rated">Top Rated</span>' : ''}
@@ -104,6 +112,29 @@ themeToggle.addEventListener('click', () => {
         `;
         gamesContainer.appendChild(gameCard);
     });
+
+    if (gamesViewAllButton && gamesContainer) {
+        const hiddenGameCards = Array.from(gamesContainer.querySelectorAll('.feature-card.is-hidden'));
+
+        if (hiddenGameCards.length === 0) {
+            gamesViewAllButton.hidden = true;
+        }
+
+        gamesViewAllButton.addEventListener('click', () => {
+            const isExpanded = gamesViewAllButton.getAttribute('aria-expanded') === 'true';
+            const nextExpandedState = !isExpanded;
+
+            hiddenGameCards.forEach((card) => {
+                card.classList.toggle('is-hidden', !nextExpandedState);
+            });
+
+            gamesViewAllButton.setAttribute('aria-expanded', String(nextExpandedState));
+
+            if (gamesViewAllLabel) {
+                gamesViewAllLabel.textContent = nextExpandedState ? 'Show less' : 'View all';
+            }
+        });
+    }
 
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
