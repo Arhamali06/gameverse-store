@@ -86,53 +86,25 @@ themeToggle.addEventListener('click', () => {
         }
     ];
 
+    // only present on index.html — guarded so cart.html doesn't error
     const gamesContainer = document.querySelector('.feature-cards-container');
-    const gamesViewAllButton = document.getElementById('games-view-all');
-    const gamesViewAllLabel = document.getElementById('games-view-all-label');
-
-    featuredGames.forEach((game, index) => {
-        const gameCard = document.createElement('article');
-        gameCard.classList.add('feature-card');
-
-        if (index >= 4) {
-            gameCard.classList.add('is-hidden');
-        }
-
-        gameCard.innerHTML = `
-            <img class="feature-card-image" src="${game.image}" alt="${game.name}">
-            ${game.topRated ? '<span class="top-rated">Top Rated</span>' : ''}
-            <div class="feature-card-details">
-                <div class="feature-card-title-row">
-                    <h3>${game.name}</h3>
-                    <span class="game-price">${game.price}</span>
+    if (gamesContainer) {
+        featuredGames.forEach((game) => {
+            const gameCard = document.createElement('article');
+            gameCard.classList.add('feature-card');
+            gameCard.innerHTML = `
+                <img class="feature-card-image" src="${game.image}" alt="${game.name}">
+                ${game.topRated ? '<span class="top-rated">Top Rated</span>' : ''}
+                <div class="feature-card-details">
+                    <div class="feature-card-title-row">
+                        <h3>${game.name}</h3>
+                        <span class="game-price">${game.price}</span>
+                    </div>
+                    <p class="game-category">${game.category}</p>
+                    <button class="add-to-cart" type="button">Add to Cart</button>
                 </div>
-                <p class="game-category">${game.category}</p>
-                <button class="add-to-cart" type="button">Add to Cart</button>
-            </div>
-        `;
-        gamesContainer.appendChild(gameCard);
-    });
-
-    if (gamesViewAllButton && gamesContainer) {
-        const hiddenGameCards = Array.from(gamesContainer.querySelectorAll('.feature-card.is-hidden'));
-
-        if (hiddenGameCards.length === 0) {
-            gamesViewAllButton.hidden = true;
-        }
-
-        gamesViewAllButton.addEventListener('click', () => {
-            const isExpanded = gamesViewAllButton.getAttribute('aria-expanded') === 'true';
-            const nextExpandedState = !isExpanded;
-
-            hiddenGameCards.forEach((card) => {
-                card.classList.toggle('is-hidden', !nextExpandedState);
-            });
-
-            gamesViewAllButton.setAttribute('aria-expanded', String(nextExpandedState));
-
-            if (gamesViewAllLabel) {
-                gamesViewAllLabel.textContent = nextExpandedState ? 'Show less' : 'View all';
-            }
+            `;
+            gamesContainer.appendChild(gameCard);
         });
     }
 
@@ -206,7 +178,8 @@ themeToggle.addEventListener('click', () => {
         header.classList.toggle('menu-open');
     });
 
-      // Close menu when a link is clicked
+      // Close menu when a link is clicked (nav links only — the cart icon
+      // is a real link now and isn't part of .menu, so it isn't affected)
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
     setActiveLink(link);
@@ -220,7 +193,12 @@ window.addEventListener('pageshow', () => {
     }
 
     window.scrollTo(0, 0);
-    setActiveLink(navLinks[0]);
+
+    // only force "Home" active on the homepage — on cart.html the nav
+    // links point elsewhere and shouldn't be marked active on load
+    if (document.getElementById('hero')) {
+        setActiveLink(navLinks[0]);
+    }
 });
 
 const enableScrollReveal = () => {
@@ -308,3 +286,126 @@ enableSectionTracking();
     header.classList.remove('menu-open');
         }
     });
+
+    // ============== CART PAGE — only runs on cart.html ==============
+    const cartItemsEl = document.getElementById('cart-items');
+
+    if (cartItemsEl) {
+        // manually added sample products — swap for real cart data later
+        const cartData = [
+            { id: 1, name: 'GTA V', category: 'Action • Adventure', price: 69.99, qty: 1, color: '#6b46ff', initials: 'GTA' },
+            { id: 2, name: 'Tekken 8', category: 'Action • Multiplayer', price: 59.99, qty: 2, color: '#4648d4', initials: 'TK' },
+            { id: 3, name: 'Black Myth Wukong', category: 'RPG • Adventure', price: 89.99, qty: 1, color: '#dc2626', initials: 'BMW' },
+            { id: 4, name: 'Forza Horizon 5', category: 'Racing • Adventure', price: 59.99, qty: 1, color: '#16a34a', initials: 'FH5' },
+        ];
+
+        let discountRate = 0;
+
+        const cartEmptyEl = document.getElementById('cart-empty');
+        const cartLayoutEl = document.querySelector('.cart-layout');
+        const cartCountText = document.getElementById('cart-count-text');
+        const subtotalEl = document.getElementById('summary-subtotal');
+        const discountEl = document.getElementById('summary-discount');
+        const totalEl = document.getElementById('summary-total');
+        const promoInput = document.getElementById('promo-input');
+        const promoApply = document.getElementById('promo-apply');
+
+        const formatMoney = (n) => `$${n.toFixed(2)}`;
+
+        function renderCart() {
+            cartItemsEl.innerHTML = '';
+
+            if (cartData.length === 0) {
+                cartLayoutEl.style.display = 'none';
+                cartEmptyEl.classList.add('is-visible');
+                cartCountText.textContent = 'Your cart is empty';
+                updateSummary();
+                return;
+            }
+
+            cartLayoutEl.style.display = 'grid';
+            cartEmptyEl.classList.remove('is-visible');
+
+            const totalItems = cartData.reduce((sum, item) => sum + item.qty, 0);
+            cartCountText.textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`;
+
+            cartData.forEach((item) => {
+                const lineTotal = item.price * item.qty;
+
+                const card = document.createElement('article');
+                card.className = 'cart-item';
+                card.dataset.id = item.id;
+                card.innerHTML = `
+                    <div class="cart-item-thumb" style="background:${item.color}">${item.initials}</div>
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.category}</p>
+                        <div class="cart-item-controls">
+                            <div class="qty-stepper">
+                                <button class="qty-btn qty-decrease" type="button" aria-label="Decrease quantity" ${item.qty <= 1 ? 'disabled' : ''}>&minus;</button>
+                                <span class="qty-value">${item.qty}</span>
+                                <button class="qty-btn qty-increase" type="button" aria-label="Increase quantity">+</button>
+                            </div>
+                            <button class="remove-btn" type="button" aria-label="Remove ${item.name}">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price-col">
+                        <span class="cart-item-price">${formatMoney(item.price)}</span>
+                        <span class="cart-item-line-total">${formatMoney(lineTotal)} total</span>
+                    </div>
+                `;
+                cartItemsEl.appendChild(card);
+            });
+
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const subtotal = cartData.reduce((sum, item) => sum + item.price * item.qty, 0);
+            const discount = subtotal * discountRate;
+            const total = subtotal - discount;
+
+            subtotalEl.textContent = formatMoney(subtotal);
+            discountEl.textContent = `-${formatMoney(discount)}`;
+            totalEl.textContent = formatMoney(total);
+        }
+
+        cartItemsEl.addEventListener('click', (event) => {
+            const card = event.target.closest('.cart-item');
+            if (!card) return;
+            const id = Number(card.dataset.id);
+            const item = cartData.find((i) => i.id === id);
+            if (!item) return;
+
+            if (event.target.closest('.qty-increase')) {
+                item.qty += 1;
+                renderCart();
+            } else if (event.target.closest('.qty-decrease')) {
+                if (item.qty > 1) {
+                    item.qty -= 1;
+                    renderCart();
+                }
+            } else if (event.target.closest('.remove-btn')) {
+                card.classList.add('removing');
+                setTimeout(() => {
+                    const index = cartData.findIndex((i) => i.id === id);
+                    if (index > -1) cartData.splice(index, 1);
+                    renderCart();
+                }, 200);
+            }
+        });
+
+        if (promoApply && promoInput) {
+            promoApply.addEventListener('click', () => {
+                const code = promoInput.value.trim().toUpperCase();
+                discountRate = code === 'GAMEVERSE10' ? 0.1 : 0;
+                updateSummary();
+            });
+        }
+
+        renderCart();
+    }

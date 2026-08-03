@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart — GameVerse</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+
+      <!-- logo -->
+      <a class="logo" href="index.html" aria-label="GameVerse home">GameVerse</a>
+
+      <!-- navigation list -->
+      <nav class="navbar" aria-label="Primary navigation">
+        <ul class="menu">
+          <li><a href="index.html#hero">Home</a></li>
+          <li><a href="index.html#category">Category</a></li>
+          <li><a href="index.html#games">Games</a></li>
+          <li><a href="index.html#offers">Offers</a></li>
+          <li><a href="index.html#newsletter">Newsletter</a></li>
+        </ul>
+      </nav>
+
+      <!-- profile info section -->
+      <div class="profile-info">
+        <div class="search-wrapper">
+          <button class="search-toggle" type="button" aria-label="Open search" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+            </svg>
+          </button>
+          <label class="search" aria-label="Search games">
+            <input type="search" placeholder="Search games" />
+            <button type="button" class="search-clear" aria-label="Clear search">&times;</button>
+          </label>
+        </div>
+
+        <a class="icon-button active" href="cart.html" aria-label="Shopping cart" aria-current="page">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+          </svg>
+        </a>
+
+        <button class="icon-button theme-toggle" type="button" id="theme-toggle" aria-label="Switch to dark mode">
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+          </svg>
+        </button>
+
+        <div class="profile-info1">
+          <img height="40px" width="40px" src="assets/images/header/profilepic.jpg" alt="Arham" />
+          <span>Arham</span>
+        </div>
+
+        <button class="hamburger-menu" type="button" aria-label="Toggle navigation menu" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hamburger-icon" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="close-icon" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="cart-page">
+      <div class="cart-top">
+        <div>
+          <h1 class="cart-heading">Your Cart</h1>
+          <p class="cart-subheading" id="cart-count-text">4 items in your cart</p>
+        </div>
+        <a class="continue-shopping" href="index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          Continue Shopping
+        </a>
+      </div>
+
+      <div class="cart-layout">
+        <section class="cart-items" id="cart-items" aria-label="Cart items"></section>
+
+        <aside class="order-summary" id="order-summary">
+          <h2>Order Summary</h2>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">$0.00</span>
+          </div>
+          <div class="summary-row discount">
+            <span>Discount</span>
+            <span id="summary-discount">-$0.00</span>
+          </div>
+
+          <div class="promo-row">
+            <input type="text" placeholder="Promo code" id="promo-input" />
+            <button class="promo-apply" type="button" id="promo-apply">Apply</button>
+          </div>
+
+          <hr class="summary-divider" />
+
+          <div class="summary-total">
+            <span>Total</span>
+            <span id="summary-total">$0.00</span>
+          </div>
+
+          <button class="checkout-btn" type="button">Proceed to Checkout</button>
+
+          <div class="secure-note">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg>
+            Secure checkout
+          </div>
+        </aside>
+      </div>
+
+      <div class="cart-empty" id="cart-empty">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+        <h3>Your cart is empty</h3>
+        <p>Looks like you haven't added anything yet.</p>
+        <a class="browse-link" href="index.html">Browse Store</a>
+      </div>
+    </main>
+
+    <!-- footer section -->
+    <footer class="site-footer" id="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a class="footer-logo" href="index.html">GameVerse</a>
+          <p>
+            Your ultimate destination for the world's most immersive gaming
+            experiences. Powered by gamers, for gamers.
+          </p>
+          <div class="footer-socials" aria-label="Social links">
+            <a href="#" aria-label="Public">Public</a>
+            <a href="#" aria-label="Email">Email</a>
+            <a href="#" aria-label="Display">Display</a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div>
+            <h3>Explore</h3>
+            <ul>
+              <li><a href="index.html#games">New Releases</a></li>
+              <li><a href="index.html#games">Top Sellers</a></li>
+              <li><a href="index.html#games">Coming Soon</a></li>
+              <li><a href="index.html#games">Free Games</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Company</h3>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press Kit</a></li>
+              <li><a href="#">Redeem Code</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2024 GameVerse Inc. All rights reserved.</p>
+        <div class="footer-language">
+          <span>English (US)</span>
+          <span>USD ($)</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
