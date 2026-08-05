@@ -188,6 +188,30 @@
       </div>
     </footer>
 
+    <!-- checkout confirmation modal -->
+    <div class="checkout-modal-overlay" id="checkout-modal">
+      <div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-modal-title">
+        <div class="checkout-modal-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+        </div>
+        <h2 id="checkout-modal-title">Order Confirmed!</h2>
+        <p class="checkout-modal-text">Thanks for shopping with GameVerse. Your order is on its way.</p>
+        <div class="checkout-modal-details">
+          <div class="checkout-modal-row">
+            <span>Order Number</span>
+            <span id="checkout-order-number">#GV-000000</span>
+          </div>
+          <div class="checkout-modal-row">
+            <span>Total Paid</span>
+            <span id="checkout-order-total">$0.00</span>
+          </div>
+        </div>
+        <button class="checkout-modal-close" id="checkout-modal-close" type="button">Continue Shopping</button>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

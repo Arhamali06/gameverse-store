@@ -456,6 +456,11 @@ enableSectionTracking();
         const totalEl = document.getElementById('summary-total');
         const promoInput = document.getElementById('promo-input');
         const promoApply = document.getElementById('promo-apply');
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const checkoutModalClose = document.getElementById('checkout-modal-close');
+        const orderNumberEl = document.getElementById('checkout-order-number');
+        const orderTotalEl = document.getElementById('checkout-order-total');
 
         let discountRate = 0;
 
@@ -464,6 +469,10 @@ enableSectionTracking();
         function renderCart() {
             const cartData = getCart(); // always read the latest saved state
             cartItemsEl.innerHTML = '';
+
+            if (checkoutBtn) {
+                checkoutBtn.disabled = cartData.length === 0;
+            }
 
             if (cartData.length === 0) {
                 cartLayoutEl.style.display = 'none';
@@ -561,6 +570,46 @@ enableSectionTracking();
                 const code = promoInput.value.trim().toUpperCase();
                 discountRate = code === 'GAMEVERSE10' ? 0.1 : 0;
                 updateSummary(getCart());
+            });
+        }
+
+        // fake checkout — this is a practice project, so there's no real
+        // payment flow, just a confirmation and a cleared cart
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', () => {
+                const cartData = getCart();
+                if (!cartData.length) return;
+
+                const subtotal = cartData.reduce((sum, item) => sum + item.price * item.qty, 0);
+                const total = subtotal - subtotal * discountRate;
+
+                if (orderNumberEl) {
+                    orderNumberEl.textContent = `#GV-${Date.now().toString().slice(-6)}`;
+                }
+                if (orderTotalEl) {
+                    orderTotalEl.textContent = formatMoney(total);
+                }
+                if (checkoutModal) {
+                    checkoutModal.classList.add('is-visible');
+                }
+
+                saveCart([]);
+                updateCartBadge();
+            });
+        }
+
+        const closeCheckoutModal = () => {
+            if (checkoutModal) checkoutModal.classList.remove('is-visible');
+            renderCart(); // now reflects the cleared cart (empty state)
+        };
+
+        if (checkoutModalClose) {
+            checkoutModalClose.addEventListener('click', closeCheckoutModal);
+        }
+
+        if (checkoutModal) {
+            checkoutModal.addEventListener('click', (event) => {
+                if (event.target === checkoutModal) closeCheckoutModal();
             });
         }
 
