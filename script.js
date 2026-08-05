@@ -5,9 +5,6 @@ const hamburgerBtn = document.getElementById('hamburger-btn');
     const searchField = document.querySelector('.search');
     const searchInput = document.querySelector('.search input');
     const searchClear = document.querySelector('.search-clear');
-    const revealTargets = document.querySelectorAll(
-        '.category-header, .category-cards .card, .feature-head, .feature-cards-container .feature-card, .offer-head, .special-offers-container .special-offer-card, .newsletter-container, .footer-container, .footer-bottom'
-    );
     const scrollSections = document.querySelectorAll('main section[id], footer[id]');
 
     const themeToggle = document.getElementById('theme-toggle');
@@ -107,6 +104,24 @@ themeToggle.addEventListener('click', () => {
 
     updateCartBadge();
 
+    // small shared helper — wires an "Add to Cart"/"Buy Now" button once
+    // its card exists in the DOM, giving the same click + feedback
+    // behavior everywhere it's used
+    const wireAddToCartButton = (button, product) => {
+        if (!button) return;
+        button.addEventListener('click', () => {
+            addToCart(product);
+
+            const originalText = button.textContent;
+            button.textContent = 'Added ✓';
+            button.disabled = true;
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 900);
+        });
+    };
+
     const featuredGames = [
         {
             name: 'GTA V',
@@ -179,25 +194,62 @@ themeToggle.addEventListener('click', () => {
             `;
             gamesContainer.appendChild(gameCard);
 
-            const addBtn = gameCard.querySelector('.add-to-cart');
-            if (addBtn) {
-                addBtn.addEventListener('click', () => {
-                    addToCart({
-                        name: game.name,
-                        category: game.category.replace('&bull;', '•'),
-                        price: parseFloat(game.price.replace('$', '')),
-                    });
+            wireAddToCartButton(gameCard.querySelector('.add-to-cart'), {
+                name: game.name,
+                category: game.category.replace('&bull;', '•'),
+                price: parseFloat(game.price.replace('$', '')),
+            });
+        });
+    }
 
-                    // quick visual confirmation, then reverts
-                    const originalText = addBtn.textContent;
-                    addBtn.textContent = 'Added ✓';
-                    addBtn.disabled = true;
-                    setTimeout(() => {
-                        addBtn.textContent = originalText;
-                        addBtn.disabled = false;
-                    }, 900);
-                });
-            }
+    // ============== SPECIAL OFFERS — same dynamic pattern as featured games ==============
+    const specialOffers = [
+        {
+            name: 'Cyberpunk 2077',
+            description: 'A futuristic RPG set in the vibrant streets of Night City.',
+            image: 'assets/images/games/cyberpunk-city-street-night-with-neon-lights-futuristic-aesthetic.jpg',
+            imageClass: 'cyberpunk',
+            discount: '-75% OFF',
+            price: 14.99,
+            originalPrice: 59.99,
+        },
+        {
+            name: 'Amazing Spider-Man',
+            description: 'Protect New York with thrilling combat and web-swinging action.',
+            image: 'assets/images/games/marvels-spider-man-2.jpg',
+            imageClass: '',
+            discount: '-50% OFF',
+            price: 24.99,
+            originalPrice: 49.99,
+        },
+    ];
+
+    // only present on index.html — guarded so cart.html doesn't error
+    const specialOffersContainer = document.querySelector('.special-offers-container');
+    if (specialOffersContainer) {
+        specialOffers.forEach((offer) => {
+            const offerCard = document.createElement('article');
+            offerCard.classList.add('special-offer-card');
+            offerCard.innerHTML = `
+                <img class="special-offer-card-image ${offer.imageClass}" src="${offer.image}" alt="${offer.name}">
+                <div class="special-offer-card-details">
+                    <span class="discount-badge">${offer.discount}</span>
+                    <h3>${offer.name}</h3>
+                    <p>${offer.description}</p>
+                    <div class="offer-prices">
+                        <span class="offer-price">$${offer.price.toFixed(2)}</span>
+                        <del class="original-price">$${offer.originalPrice.toFixed(2)}</del>
+                    </div>
+                    <button class="buy-now" type="button">Buy Now</button>
+                </div>
+            `;
+            specialOffersContainer.appendChild(offerCard);
+
+            wireAddToCartButton(offerCard.querySelector('.buy-now'), {
+                name: offer.name,
+                category: `Special Offer • ${offer.discount}`,
+                price: offer.price,
+            });
         });
     }
 
@@ -297,6 +349,14 @@ window.addEventListener('pageshow', () => {
     // shown, including when navigating back via the browser's back button
     updateCartBadge();
 });
+
+// queried here (after featured games AND special offers have already
+// been inserted into the DOM above) so both dynamic sections actually
+// get picked up for the fade-in effect — querying this earlier, before
+// those cards existed, was why they weren't animating before
+const revealTargets = document.querySelectorAll(
+    '.category-header, .category-cards .card, .feature-head, .feature-cards-container .feature-card, .offer-head, .special-offers-container .special-offer-card, .newsletter-container, .footer-container, .footer-bottom'
+);
 
 const enableScrollReveal = () => {
     if (!revealTargets.length) {
