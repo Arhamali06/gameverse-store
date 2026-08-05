@@ -34,6 +34,79 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('gameverse-theme', isDark ? 'dark' : 'light');
 });
 
+    // ============== CART STORE — shared across index.html and cart.html ==============
+    const CART_STORAGE_KEY = 'gameverse-cart';
+
+    const getCart = () => {
+        try {
+            const raw = localStorage.getItem(CART_STORAGE_KEY);
+            return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+            return [];
+        }
+    };
+
+    const saveCart = (cart) => {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    };
+
+    const cartColorPalette = ['#6b46ff', '#4648d4', '#dc2626', '#16a34a', '#0ea5e9', '#f59e0b'];
+
+    const getInitials = (name) =>
+        name
+            .split(' ')
+            .map((w) => w[0])
+            .filter(Boolean)
+            .slice(0, 3)
+            .join('')
+            .toUpperCase();
+
+    const getColorForName = (name) => {
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return cartColorPalette[Math.abs(hash) % cartColorPalette.length];
+    };
+
+    // adds a product to the cart (or bumps its quantity if it's already in there)
+    const addToCart = (product) => {
+        const cart = getCart();
+        const existing = cart.find((item) => item.name === product.name);
+
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({
+                id: product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                name: product.name,
+                category: product.category,
+                price: product.price,
+                qty: 1,
+                color: getColorForName(product.name),
+                initials: getInitials(product.name),
+            });
+        }
+
+        saveCart(cart);
+        updateCartBadge();
+    };
+
+    // updates every cart-badge on the current page (there's only one, but
+    // this stays safe even if that ever changes)
+    const updateCartBadge = () => {
+        const badgeEls = document.querySelectorAll('.cart-badge');
+        if (!badgeEls.length) return;
+
+        const totalItems = getCart().reduce((sum, item) => sum + item.qty, 0);
+        badgeEls.forEach((badge) => {
+            badge.textContent = totalItems;
+            badge.classList.toggle('is-visible', totalItems > 0);
+        });
+    };
+
+    updateCartBadge();
+
     const featuredGames = [
         {
             name: 'GTA V',
@@ -105,6 +178,26 @@ themeToggle.addEventListener('click', () => {
                 </div>
             `;
             gamesContainer.appendChild(gameCard);
+
+            const addBtn = gameCard.querySelector('.add-to-cart');
+            if (addBtn) {
+                addBtn.addEventListener('click', () => {
+                    addToCart({
+                        name: game.name,
+                        category: game.category.replace('&bull;', '•'),
+                        price: parseFloat(game.price.replace('$', '')),
+                    });
+
+                    // quick visual confirmation, then reverts
+                    const originalText = addBtn.textContent;
+                    addBtn.textContent = 'Added ✓';
+                    addBtn.disabled = true;
+                    setTimeout(() => {
+                        addBtn.textContent = originalText;
+                        addBtn.disabled = false;
+                    }, 900);
+                });
+            }
         });
     }
 
@@ -199,6 +292,10 @@ window.addEventListener('pageshow', () => {
     if (document.getElementById('hero')) {
         setActiveLink(navLinks[0]);
     }
+
+    // badge should reflect the latest cart state whenever the page is
+    // shown, including when navigating back via the browser's back button
+    updateCartBadge();
 });
 
 const enableScrollReveal = () => {
@@ -291,16 +388,6 @@ enableSectionTracking();
     const cartItemsEl = document.getElementById('cart-items');
 
     if (cartItemsEl) {
-        // manually added sample products — swap for real cart data later
-        const cartData = [
-            { id: 1, name: 'GTA V', category: 'Action • Adventure', price: 69.99, qty: 1, color: '#6b46ff', initials: 'GTA' },
-            { id: 2, name: 'Tekken 8', category: 'Action • Multiplayer', price: 59.99, qty: 2, color: '#4648d4', initials: 'TK' },
-            { id: 3, name: 'Black Myth Wukong', category: 'RPG • Adventure', price: 89.99, qty: 1, color: '#dc2626', initials: 'BMW' },
-            { id: 4, name: 'Forza Horizon 5', category: 'Racing • Adventure', price: 59.99, qty: 1, color: '#16a34a', initials: 'FH5' },
-        ];
-
-        let discountRate = 0;
-
         const cartEmptyEl = document.getElementById('cart-empty');
         const cartLayoutEl = document.querySelector('.cart-layout');
         const cartCountText = document.getElementById('cart-count-text');
@@ -310,16 +397,19 @@ enableSectionTracking();
         const promoInput = document.getElementById('promo-input');
         const promoApply = document.getElementById('promo-apply');
 
+        let discountRate = 0;
+
         const formatMoney = (n) => `$${n.toFixed(2)}`;
 
         function renderCart() {
+            const cartData = getCart(); // always read the latest saved state
             cartItemsEl.innerHTML = '';
 
             if (cartData.length === 0) {
                 cartLayoutEl.style.display = 'none';
                 cartEmptyEl.classList.add('is-visible');
                 cartCountText.textContent = 'Your cart is empty';
-                updateSummary();
+                updateSummary(cartData);
                 return;
             }
 
@@ -361,10 +451,10 @@ enableSectionTracking();
                 cartItemsEl.appendChild(card);
             });
 
-            updateSummary();
+            updateSummary(cartData);
         }
 
-        function updateSummary() {
+        function updateSummary(cartData) {
             const subtotal = cartData.reduce((sum, item) => sum + item.price * item.qty, 0);
             const discount = subtotal * discountRate;
             const total = subtotal - discount;
@@ -377,23 +467,30 @@ enableSectionTracking();
         cartItemsEl.addEventListener('click', (event) => {
             const card = event.target.closest('.cart-item');
             if (!card) return;
-            const id = Number(card.dataset.id);
+
+            const id = card.dataset.id;
+            const cartData = getCart();
             const item = cartData.find((i) => i.id === id);
             if (!item) return;
 
             if (event.target.closest('.qty-increase')) {
                 item.qty += 1;
+                saveCart(cartData);
+                updateCartBadge();
                 renderCart();
             } else if (event.target.closest('.qty-decrease')) {
                 if (item.qty > 1) {
                     item.qty -= 1;
+                    saveCart(cartData);
+                    updateCartBadge();
                     renderCart();
                 }
             } else if (event.target.closest('.remove-btn')) {
                 card.classList.add('removing');
                 setTimeout(() => {
-                    const index = cartData.findIndex((i) => i.id === id);
-                    if (index > -1) cartData.splice(index, 1);
+                    const updatedCart = getCart().filter((i) => i.id !== id);
+                    saveCart(updatedCart);
+                    updateCartBadge();
                     renderCart();
                 }, 200);
             }
@@ -403,7 +500,7 @@ enableSectionTracking();
             promoApply.addEventListener('click', () => {
                 const code = promoInput.value.trim().toUpperCase();
                 discountRate = code === 'GAMEVERSE10' ? 0.1 : 0;
-                updateSummary();
+                updateSummary(getCart());
             });
         }
 

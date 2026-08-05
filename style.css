@@ -1309,13 +1309,12 @@ html.dark-mode .footer-bottom { color: #e5e7eb; }
 html.dark-mode .footer-socials a { background: rgba(255,255,255,0.06); color: #e5e7eb; }
 
 
-
-/* cart page css */
 /* ============== CART PAGE — append to style.css ============== */
 
 /* the cart icon is now a real link, not just a button — this keeps it
    visually identical to your other icon-buttons */
 .icon-button {
+    position: relative;
     text-decoration: none;
 }
 
@@ -1330,6 +1329,28 @@ html.dark-mode .icon-button.active {
     color: #fff;
     border-color: #6b46ff;
 }
+
+/* red count badge shown on the cart icon */
+.cart-badge {
+    display: none;
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #dc2626;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    border: 2px solid #f8f9ff;
+}
+html.dark-mode .cart-badge { border-color: #15171f; }
+.cart-badge.is-visible { display: flex; }
 
 .cart-page {
     max-width: 1200px;
