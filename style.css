@@ -600,6 +600,10 @@ html.dark-mode .theme-toggle .icon-moon { display: none; }
 }
 
 .offer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
     margin-bottom: 36px;
 }
 
@@ -635,6 +639,10 @@ html.dark-mode .theme-toggle .icon-moon { display: none; }
 .special-offer-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 16px 30px rgba(17, 24, 39, 0.14);
+}
+
+.special-offer-card.is-hidden {
+    display: none;
 }
 
 .special-offer-card-image {

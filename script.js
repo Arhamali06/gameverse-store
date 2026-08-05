@@ -202,8 +202,44 @@ themeToggle.addEventListener('click', () => {
         });
     }
 
+    // show only the first 4 featured games initially; reveal rest on button click
+    const featuredCards = document.querySelectorAll('.feature-cards-container .feature-card');
+    if (featuredCards.length) {
+        featuredCards.forEach((card, idx) => {
+            if (idx >= 4) card.classList.add('is-hidden');
+        });
+    }
+
+    const featuredViewBtn = document.getElementById('featured-view-all');
+    if (featuredViewBtn) {
+        featuredViewBtn.addEventListener('click', () => {
+            const hidden = document.querySelectorAll('.feature-cards-container .feature-card.is-hidden');
+            if (!hidden.length) return; // nothing to do
+            hidden.forEach((c) => c.classList.remove('is-hidden'));
+            featuredViewBtn.disabled = true;
+        });
+    }
+
     // ============== SPECIAL OFFERS — same dynamic pattern as featured games ==============
     const specialOffers = [
+        {
+            name: 'Cyberpunk 2077',
+            description: 'A futuristic RPG set in the vibrant streets of Night City.',
+            image: 'assets/images/games/cyberpunk-city-street-night-with-neon-lights-futuristic-aesthetic.jpg',
+            imageClass: 'cyberpunk',
+            discount: '-75% OFF',
+            price: 14.99,
+            originalPrice: 59.99,
+        },
+        {
+            name: 'Amazing Spider-Man',
+            description: 'Protect New York with thrilling combat and web-swinging action.',
+            image: 'assets/images/games/marvels-spider-man-2.jpg',
+            imageClass: '',
+            discount: '-50% OFF',
+            price: 24.99,
+            originalPrice: 49.99,
+        },
         {
             name: 'Cyberpunk 2077',
             description: 'A futuristic RPG set in the vibrant streets of Night City.',
@@ -250,6 +286,24 @@ themeToggle.addEventListener('click', () => {
                 category: `Special Offer • ${offer.discount}`,
                 price: offer.price,
             });
+        });
+    }
+
+    // show only the first 2 special offers initially; reveal rest on button click
+    const specialCards = document.querySelectorAll('.special-offers-container .special-offer-card');
+    if (specialCards.length) {
+        specialCards.forEach((card, idx) => {
+            if (idx >= 2) card.classList.add('is-hidden');
+        });
+    }
+
+    const offersViewBtn = document.getElementById('offers-view-all');
+    if (offersViewBtn) {
+        offersViewBtn.addEventListener('click', () => {
+            const hidden = document.querySelectorAll('.special-offers-container .special-offer-card.is-hidden');
+            if (!hidden.length) return; // nothing to do
+            hidden.forEach((c) => c.classList.remove('is-hidden'));
+            offersViewBtn.disabled = true;
         });
     }
 
