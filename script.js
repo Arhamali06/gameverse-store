@@ -79,6 +79,7 @@ themeToggle.addEventListener('click', () => {
                 name: product.name,
                 category: product.category,
                 price: product.price,
+                image: product.image || null,
                 qty: 1,
                 color: getColorForName(product.name),
                 initials: getInitials(product.name),
@@ -198,6 +199,7 @@ themeToggle.addEventListener('click', () => {
                 name: game.name,
                 category: game.category.replace('&bull;', '•'),
                 price: parseFloat(game.price.replace('$', '')),
+                image: game.image,
             });
         });
     }
@@ -241,22 +243,22 @@ themeToggle.addEventListener('click', () => {
             originalPrice: 49.99,
         },
         {
-            name: 'Cyberpunk 2077',
-            description: 'A futuristic RPG set in the vibrant streets of Night City.',
-            image: 'assets/images/games/cyberpunk-city-street-night-with-neon-lights-futuristic-aesthetic.jpg',
-            imageClass: 'cyberpunk',
-            discount: '-75% OFF',
-            price: 14.99,
-            originalPrice: 59.99,
+            name: 'The Last of Us Part II',
+            description: 'Experience an emotional journey in a post-apocalyptic world filled with danger and survival.',
+            image: 'assets/images/games/lastofus2.jpg',
+            imageClass: 'last-of-us',
+            discount: '-25% OFF',
+            price: 25.99,
+            originalPrice: 34.99,
         },
         {
-            name: 'Amazing Spider-Man',
-            description: 'Protect New York with thrilling combat and web-swinging action.',
-            image: 'assets/images/games/marvels-spider-man-2.jpg',
-            imageClass: '',
-            discount: '-50% OFF',
-            price: 24.99,
-            originalPrice: 49.99,
+            name: 'Cricket 26',
+            description: 'The latest installment in the popular cricket series.',
+            image: 'assets/images/games/cricket26.webp',
+            imageClass: 'cricket',
+            discount: '-10% OFF',
+            price: 39.99,
+            originalPrice: 44.99,
         },
     ];
 
@@ -285,6 +287,7 @@ themeToggle.addEventListener('click', () => {
                 name: offer.name,
                 category: `Special Offer • ${offer.discount}`,
                 price: offer.price,
+                image: offer.image,
             });
         });
     }
@@ -548,8 +551,12 @@ enableSectionTracking();
                 const card = document.createElement('article');
                 card.className = 'cart-item';
                 card.dataset.id = item.id;
+
                 card.innerHTML = `
-                    <div class="cart-item-thumb" style="background:${item.color}">${item.initials}</div>
+                    ${item.image
+    ? `<img class="cart-item-thumb" src="${item.image}" alt="${item.name}">`
+    : `<div class="cart-item-thumb" style="background:${item.color}">${item.initials}</div>`
+}
                     <div class="cart-item-info">
                         <h3>${item.name}</h3>
                         <p>${item.category}</p>

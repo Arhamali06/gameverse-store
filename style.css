@@ -1455,7 +1455,10 @@ html.dark-mode .cart-item {
     color: #fff;
     flex-shrink: 0;
 }
-
+img.cart-item-thumb {
+    object-fit: cover;
+    display: block;
+}
 .cart-item-info h3 {
     margin: 0 0 4px;
     font-size: 17px;
